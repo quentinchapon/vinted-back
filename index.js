@@ -7,6 +7,7 @@ const formidable = require("express-formidable");
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URI); // Vous pourrez vous connecter à votre base de données, sans pour autant préciser les identifiants dans le fichier index.js
 //Cette ligne fait bénifier de CORS à toutes les requêtes de notre serveur
+const cors = require("cors");
 app.use(cors());
 const morgan = require("morgan");
 app.use(formidable());
