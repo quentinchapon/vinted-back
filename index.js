@@ -3,11 +3,6 @@ require("dotenv").config(); // Permet d'activer les variables d'environnement qu
 
 mongoose.connect(process.env.MONGODB_URI); // Vous pourrez vous connecter à votre base de données, sans pour autant préciser les identifiants dans le fichier index.js
 
-// Utilisez le port défini dans le fichier .env
-app.listen(process.env.PORT, () => {
-  console.log("Server started");
-});
-
 //Cette ligne fait bénifier de CORS à toutes les requêtes de notre serveur
 app.use(cors());
 
@@ -36,6 +31,7 @@ app.all("*", (req, res) => {
   res.status(400).json({ message: "Page not found" });
 });
 
-app.listen(port, () => {
+// Utilisez le port défini dans le fichier .env
+app.listen(process.env.PORT, () => {
   console.log("Server started");
 });
