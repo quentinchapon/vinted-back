@@ -3,9 +3,9 @@ const router = express();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
-  cloud_name: "dzxckfohi",
-  api_key: "856468237124118",
-  api_secret: "fxl-QL4DzWFLVUfJe6sgbvGo7yc",
+  cloud_name: CLOUDINARY_CLOUD_NAME,
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
 });
 
 // import des models
