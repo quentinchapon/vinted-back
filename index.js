@@ -25,6 +25,10 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
 });
 
+app.get("/", (req, res) => {
+  res.status(400).json({ message: "Welcome toi" });
+});
+
 app.all("*", (req, res) => {
   res.status(400).json({ message: "Page not found" });
 });
