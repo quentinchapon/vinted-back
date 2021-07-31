@@ -26,11 +26,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 app.get("/", (req, res) => {
-  res.status(400).json({ message: "Welcome toi" });
+  res.status(400).json({ message: "Bienvenue sur l'API de (almost) Vinted" });
 });
 
 app.all("*", (req, res) => {
-  res.status(400).json({ message: "Page not found" });
+  res.status(400).json({ message: "fdghfh" });
 });
 
 // Utilisez le port défini dans le fichier .env
