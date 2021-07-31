@@ -53,14 +53,14 @@ router.post("/vinted/offer/publish", isAuthenticated, async (req, res) => {
     newOffer.product_image = result;
     // Sauvgarder newOffer
     await newOffer.save();
-    res.status(200).json("Hello");
+    res.status(200).json("Merci, votre annonce est en ligne");
   } catch (error) {
     res.status(400).json({ message: error });
   }
 });
 
 //Route de suppression de l'annonce
-router.delete("vinted/offer/delete", isAuthenticated, async (req, res) => {
+router.delete("/vinted/offer/delete", isAuthenticated, async (req, res) => {
   try {
     const offerToDelete = await Offer.findById(req.fields._id);
 
