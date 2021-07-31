@@ -67,7 +67,7 @@ router.delete("/vinted/offer/delete", isAuthenticated, async (req, res) => {
     if (offerToDelete) {
       await offerToDelete.remove();
       await cloudinary.api.delete_all_resources(
-        `/vinted/offer/${offerToDelete._id}`
+        `/vinted/offers/${offerToDelete._id}`
       );
       await cloudinary.api.delete_folder(`/vinted/offers/${offerToDelete._id}`);
 
