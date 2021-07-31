@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 });
 
 app.all("*", (req, res) => {
-  res.status(400).json({ message: "fdghfh" });
+  res.status(400).json({ message: "Page not found" });
 });
 
 // Utilisez le port défini dans le fichier .env

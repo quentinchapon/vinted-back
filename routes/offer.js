@@ -69,9 +69,9 @@ router.delete("vinted/offer/delete", isAuthenticated, async (req, res) => {
       await cloudinary.api.delete_all_resources(
         `/vinted/offer/${offerToDelete._id}`
       );
-      await cloudinary.api.delete_folder(`/vinted/offer/${offerToDelete._id}`);
+      await cloudinary.api.delete_folder(`/vinted/offers/${offerToDelete._id}`);
 
-      res.status(200).json({ message: "Your offer has been well deleted" });
+      res.status(200).json({ message: "Your offer has been deleted" });
     } else {
       res.status(400).json({ message: "This offer does not exists" });
     }
