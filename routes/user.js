@@ -23,7 +23,6 @@ router.post("/vinted/user/signup", async (req, res) => {
         email: req.fields.email,
         account: {
           username: req.fields.username,
-          phone: req.fields.phone,
           avatar: req.files.avatar.path,
         },
         token: generatedToken,
@@ -38,7 +37,6 @@ router.post("/vinted/user/signup", async (req, res) => {
         token: newUser.token,
         account: {
           username: newUser.account.username,
-          phone: newUser.account.phone,
         },
       });
     } else {
@@ -62,7 +60,6 @@ router.post("/vinted/user/login", async (req, res) => {
         token: checkUser.token,
         account: {
           username: checkUser.account.username,
-          phone: checkUser.account.phone,
         },
       });
     } else {
