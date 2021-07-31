@@ -59,6 +59,27 @@ router.post("/vinted/offer/publish", isAuthenticated, async (req, res) => {
   }
 });
 
+//Route de suppression de l'annonce
+router.delete("vinted/offer/delete", isAuthenticated, async (req, res) => {
+  try {
+    const offerToDelete = await Offer.findById(req.fields._id);
+
+    if (offerToDelete) {
+      await offerToDelete.remove();
+      await cloudinary.api.delete_all_resources(
+        `/vinted/offer/${offerToDelete._id}`
+      );
+      await cloudinary.api.delete_folder(`/vinted/offer/${offerToDelete._id}`);
+
+      res.status(200).json({ message: "Your offer has been well deleted" });
+    } else {
+      res.status(400).json({ message: "This offer does not exists" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 //Route permettant d'afficher l'ensemble des offres, filtrées
 router.get("/vinted/offers", async (req, res) => {
   try {
@@ -126,27 +147,6 @@ router.get("/offer/:id", async (req, res) => {
       select: "account",
     });
     res.status(200).json(offer);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-//Route de suppression de l'annonce
-router.delete("vinted/offer/delete", isAuthenticated, async (req, res) => {
-  try {
-    const offerToDelete = await Offer.findById(req.fields._id);
-
-    if (offerToDelete) {
-      await offerToDelete.remove();
-      await cloudinary.api.delete_all_resources(
-        `/vinted/offers/${offerToDelete._id}`
-      );
-      await cloudinary.api.delete_folder(`/vinted/offers/${offerToDelete._id}`);
-
-      res.status(200).json({ message: "Your offer has been well deleted" });
-    } else {
-      res.status(400).json({ message: "This offer does not exists" });
-    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
