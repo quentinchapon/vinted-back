@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
         email: req.fields.email,
         account: {
           username: req.fields.username,
-          avatar: req.files.avatar.path,
+          // avatar: req.files.avatar.path,
         },
         token: generatedToken,
         hash: generatedHash,
