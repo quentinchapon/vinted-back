@@ -131,4 +131,25 @@ router.get("/offer/:id", async (req, res) => {
   }
 });
 
+//Route de suppression de l'annonce
+router.delete("vinted/offer/delete", isAuthenticated, async (req, res) => {
+  try {
+    const offerToDelete = await Offer.findById(req.fields._id);
+
+    if (offerToDelete) {
+      await offerToDelete.remove();
+      await cloudinary.api.delete_all_resources(
+        `/vinted/offers/${offerToDelete._id}`
+      );
+      await cloudinary.api.delete_folder(`/vinted/offers/${offerToDelete._id}`);
+
+      res.status(200).json({ message: "Your offer has been well deleted" });
+    } else {
+      res.status(400).json({ message: "This offer does not exists" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
