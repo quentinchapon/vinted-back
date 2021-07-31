@@ -13,7 +13,7 @@ const User = require("../models/User");
 const Offer = require("../models/Offer");
 
 // Route permettant de poster une nouvelle offre
-router.post("/vinted/offer/publish", isAuthenticated, async (req, res) => {
+router.post("/offer/publish", isAuthenticated, async (req, res) => {
   try {
     //   console.log(req.user);
 
@@ -60,16 +60,14 @@ router.post("/vinted/offer/publish", isAuthenticated, async (req, res) => {
 });
 
 //Route de suppression de l'annonce
-router.delete("/vinted/offer/delete", isAuthenticated, async (req, res) => {
+router.delete("/offer/delete", isAuthenticated, async (req, res) => {
   try {
     const offerToDelete = await Offer.findById(req.fields._id);
 
     if (offerToDelete) {
       await offerToDelete.remove();
-      await cloudinary.api.delete_all_resources(
-        `/vinted/offers/${offerToDelete._id}`
-      );
-      await cloudinary.api.delete_folder(`/vinted/offers/${offerToDelete._id}`);
+      await cloudinary.api.delete_all_resources(`/offers/${offerToDelete._id}`);
+      await cloudinary.api.delete_folder(`/offers/${offerToDelete._id}`);
 
       res.status(200).json({ message: "Your offer has been deleted" });
     } else {
@@ -81,7 +79,7 @@ router.delete("/vinted/offer/delete", isAuthenticated, async (req, res) => {
 });
 
 //Route permettant d'afficher l'ensemble des offres, filtrées
-router.get("/vinted/offers", async (req, res) => {
+router.get("/offers", async (req, res) => {
   try {
     const filters = {};
     let sort = {};

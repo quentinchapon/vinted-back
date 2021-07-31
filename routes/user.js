@@ -9,7 +9,7 @@ const Offer = require("../models/Offer");
 const User = require("../models/User");
 
 // Route de création d'utilisateur
-router.post("/vinted/user/signup", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const checkEmail = await User.findOne({ email: req.fields.email });
     //console.log(checkEmail);
@@ -48,7 +48,7 @@ router.post("/vinted/user/signup", async (req, res) => {
 });
 
 //Route de login
-router.post("/vinted/user/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const checkUser = await User.findOne({ email: req.fields.email });
     const checkHash = SHA256(req.fields.password + checkUser.salt).toString(
