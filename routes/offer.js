@@ -84,6 +84,7 @@ router.get("/offers", async (req, res) => {
     const filters = {};
     let sort = {};
 
+    // Recherche sur la description
     if (req.query.description) {
       filters.product_description = new RegExp(req.query.description, "i");
       // ajoute une clé product_name à l'objet filters
@@ -92,6 +93,8 @@ router.get("/offers", async (req, res) => {
         product_description: new RegExp(req.query.title, "i");
       }
     }
+
+    // Application d'une limite de prix min et/ou max
 
     if (req.query.priceMin) {
       filters.product_price = { $gte: Number(req.query.priceMin) };
@@ -105,11 +108,15 @@ router.get("/offers", async (req, res) => {
       }
     }
 
+    //Classement par prix ascendant ou descendant
+
     if (req.query.sort === "price-asc") {
       sort = { product_price: 1 };
     } else if (req.query.sort === "price-desc") {
       sort = { product_price: -1 };
     }
+
+    // Pagination
 
     let page;
     const limit = Number(req.query.limit);
