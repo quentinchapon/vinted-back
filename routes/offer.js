@@ -88,9 +88,9 @@ router.get("/offers", async (req, res) => {
       filters.product_description = new RegExp(req.query.description, "i");
       // ajoute une clé product_name à l'objet filters
       // cette clé a pour valeur new RegExp(req.query.title, "i")
-      // {
-      //   product_name: new RegExp(req.query.title, "i");
-      // }
+      {
+        product_description: new RegExp(req.query.title, "i");
+      }
     }
 
     if (req.query.priceMin) {
