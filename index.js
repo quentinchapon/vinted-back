@@ -30,7 +30,7 @@ app.post("/payment", async (req, res) => {
       amount: req.fields.price * 100,
       currency: "eur",
       description: req.fields.title,
-      source: process.env.STRIPE_API_SECRET,
+      source: req.fields.stripeToken,
     });
     console.log("La réponse de Stripe ====> ", response);
     if (response.status === "succeeded") {
