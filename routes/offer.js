@@ -2,13 +2,14 @@ const express = require("express");
 const router = express();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const cloudinary = require("cloudinary").v2;
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// import des models
+// Import des models
 const User = require("../models/User");
 const Offer = require("../models/Offer");
 

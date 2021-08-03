@@ -1,17 +1,15 @@
-// La ligne suivante ne doit être utilisée qu'une seule fois et au tout début du projet. De préférence dans index.js
-require("dotenv").config(); // Permet d'activer les variables d'environnement qui se trouvent dans le fichier `.env`
-
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const formidable = require("express-formidable");
+const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
 const mongoose = require("mongoose");
-//Cette ligne fait bénifier de CORS à toutes les requêtes de notre serveur
 const cors = require("cors");
 app.use(cors());
 const morgan = require("morgan");
 app.use(formidable());
 app.use(morgan("dev"));
-const port = 3000;
+const port = 4000;
 
 // Import des routes
 const usersRoutes = require("./routes/user");
@@ -25,15 +23,34 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
 });
 
+// Route de paiement avec STRIPE
+app.post("/payment", async (req, res) => {
+  try {
+    const response = await stripe.charges.create({
+      amount: req.fields.price * 100,
+      currency: "eur",
+      description: req.fields.price,
+      source: process.env.STRIPE_API_SECRET,
+    });
+    console.log("La réponse de Stripe ====> ", response);
+    if (response.status === "succeeded") {
+      res.status(200).json({ message: "Paiement validé" });
+    } else {
+      res.status(400).json({ message: "An error occured" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 app.get("/", (req, res) => {
-  res.status(400).json({ message: "Bienvenue sur l'API de (almost) Vinted" });
+  res.status(200).json({ message: "Bienvenue sur l'API de (almost) Vinted" });
 });
 
 app.all("*", (req, res) => {
   res.status(400).json({ message: "Page not found" });
 });
 
-// Utilisez le port défini dans le fichier .env
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   console.log("Server started");
 });
