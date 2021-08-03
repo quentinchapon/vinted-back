@@ -29,7 +29,7 @@ app.post("/payment", async (req, res) => {
     const response = await stripe.charges.create({
       amount: req.fields.price * 100,
       currency: "eur",
-      description: req.fields.price,
+      description: req.fields.title,
       source: process.env.STRIPE_API_SECRET,
     });
     console.log("La réponse de Stripe ====> ", response);
@@ -43,9 +43,13 @@ app.post("/payment", async (req, res) => {
   }
 });
 
+//Racine
+
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Bienvenue sur l'API de (almost) Vinted" });
 });
+
+// Toutes les routes
 
 app.all("*", (req, res) => {
   res.status(400).json({ message: "Page not found" });
