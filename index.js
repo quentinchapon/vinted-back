@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.post("/payment", async (req, res) => {
   try {
     const response = await stripe.charges.create({
-      amount: req.fields.price * 100,
+      amount: req.fields.price,
       currency: "eur",
       description: req.fields.title,
       source: req.fields.stripeToken,
